@@ -1,0 +1,33 @@
+
+/* Header Styles */
+.header-modern {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  box-shadow: var(--shadow-medium);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo-img {
+  height: 50px;
+  width: auto;
+  transition: var(--transition);
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+.nav-link-modern {
+  color: var(--secondary-color);
+  font-weight: 500;
+  padding: 10px 20px !important;
+  border-radius: 25px;
+  transition: var(--transition);
+  margin: 0 5px;
+}
+
+.nav-link-modern:hover {
+  background: rgba(255, 255, 255, 0.161);
+  transform: translateY(-2px);
+}

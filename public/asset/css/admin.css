@@ -1,0 +1,214 @@
+/*
+   LOGGED 
+*/
+
+/* Variables CSS */
+:root {
+  --primary-color: #9b1c2f;
+  --primary-dark: #6a0a1d;
+  --secondary-color: #f8f9fa;
+  --accent-color: #ffc107;
+  --text-dark: #2c3e50;
+  --text-muted: #6c757d;
+  --border-color: #e9ecef;
+  --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.2);
+  --border-radius: 12px;
+  --transition: all 0.3s ease;
+  /* Added burgundy color variables to match Dart app */
+  --burgundy-color: #800020;
+  --burgundy-hover: #6a001a;
+  --dark-transparent: rgba(0, 0, 0, 0.5);
+}
+
+/* Fuente Exo2 similar a Flutter */
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&display=swap");
+
+body {
+  font-family: "Exo 2", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fondo con imagen de Neza */
+.background-neza {
+  background-image: url("../img/USYDNEZA.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.sidebar {
+    height: 100vh;
+    background: #1e293b;
+    color: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar a {
+    color: #cbd5f5;
+    text-decoration: none;
+    display: block;
+    padding: 12px 15px;
+}
+
+.sidebar .collapse a {
+    padding-left: 32px;
+    font-size: 0.95rem;
+}
+
+.sidebar a:hover {
+    background: #334155;
+    color: white;
+}
+
+.content {
+    padding: 20px;
+}
+
+.adminContainer{
+    background: #f8f9fad7;
+}
+
+/* ===== CONTENEDOR DEL MODULO ===== */
+.view_enlaces {
+  width: 100%;
+  min-height: calc(100vh - 40px);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-light);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header del modulo */
+.view_enlaces h3 {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* ---------------------------------------------------------------------------- */
+
+/* ===== CARD DE LA TABLA ENLACES ===== */
+
+.view_enlaces {
+  width: 100%;
+  min-height: calc(100vh - 40px);
+  background: rgba(255, 255, 255, 0.513);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-light);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header del modulo */
+.view_enlaces h3 {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* ===== CARD DE LA TABLA ===== */
+.view_enlaces .card {
+  flex: 1;
+  border-radius: 18px;
+  box-shadow: var(--shadow-medium);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* CONTENEDOR SCROLL DE TABLA (CLAVE) */
+.table-responsive {
+  flex: 1;
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  overflow-x: auto;
+  border-radius: 12px;
+}
+
+/* ===== TABLA ESTILO SISTEMA ===== */
+.enlacesTable {
+  margin: 0;
+  font-size: 0.99rem;
+}
+
+.enlacesTable tbody tr:hover {
+  background: #4c4b4bb5;
+  color: #f8f9fa;
+}
+
+.tableHeader{
+    background: var(--primary-color);
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+/* Fila de detalle */
+.collapse td {
+  background: #f8fafc !important;
+  border-top: none;
+}
+
+/* Botones más elegantes */
+.btn-group .btn {
+  border-radius: 8px !important;
+  padding: 4px 10px;
+}
+
+/* Badge total */
+.badge {
+  font-size: 0.9rem;
+  padding: 6px 12px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablets */
+@media (max-width: 992px) {
+  .view_enlaces {
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .table-responsive {
+    max-height: calc(100vh - 220px);
+  }
+}
+
+/* Celulares */
+@media (max-width: 768px) {
+  .view_enlaces {
+    min-height: auto;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .view_enlaces h3 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  /* Header se apila en móvil */
+  .view_enlaces .d-flex {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px;
+  }
+
+  .table-responsive {
+    max-height: 60vh;
+  }
+
+  .enlacesTable {
+    font-size: 0.85rem;
+  }
+}
