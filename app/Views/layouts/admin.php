@@ -11,7 +11,6 @@
             <a href="<?= base_url('admin/dashboard') ?>">📊 Dashboard</a>
             <a href="<?= base_url('admin/usuarios') ?>">👥 Usuarios</a>
             <a href="<?= base_url('admin/roles') ?>">🔐 Roles</a>
-            <a href="<?= base_url('admin/permisos') ?>">🛡 Permisos</a>
             <a href="<?= base_url('admin/roles/permisos') ?>">⚙ Asignar Permisos a Roles</a>
             <a href="<?= base_url('admin/usuarios/permisos') ?>">🎯 Permisos por Usuario</a>
             <div class="sidebar-dropdown">
@@ -21,6 +20,7 @@
                 <div class="collapse" id="catalogosMenu">
                     <a class="ms-3" href="<?= base_url('admin/software') ?>">Software</a>
                     <a class="ms-3" href="<?= base_url('admin/areas') ?>">Areas</a>
+                    <a class="ms-3" href="<?= base_url('admin/permisos') ?>">Permisos</a>
                 </div>
             </div>
 

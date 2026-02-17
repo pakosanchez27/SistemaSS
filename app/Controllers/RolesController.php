@@ -10,7 +10,15 @@ class RolesController extends BaseController
     {
         $model = new RolesModel();
         $data['roles'] = $model->findAll();
-        return view('admin/roles/index', $data);
+
+          $css = [
+            'style' => 'admin.css'
+        ];
+
+        return view('base/head', $css)
+            . view('base/header')
+            . view('admin/roles/index', $data)
+            . view('base/footer');
     }
 
     public function create()

@@ -14,7 +14,7 @@
         <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Estado</th>
+            <th class="text-center">Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -23,7 +23,13 @@
         <tr>
             <td><?= $item['id'] ?></td>
             <td><?= esc($item['nombre']) ?></td>
-            <td><?= $item['estado'] ? 'Activo' : 'Inactivo' ?></td>
+            <td class="text-center">
+                <?php if ($item['estado']): ?>
+                    <span class="badge bg-success">Activo</span>
+                <?php else: ?>
+                    <span class="badge bg-danger">Inactivo</span>
+                <?php endif; ?>
+            </td>
             <td>
                 <div class="d-flex gap-2">
                     <button type="button" class="btn btn-sm btn-warning" title="Editar Software" onclick="editSoftware(<?php echo $item['id'] ?>)">

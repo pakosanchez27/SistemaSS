@@ -51,6 +51,11 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->get('admin/usuarios', 'UsuariosController::index');
     $routes->get('admin/usuarios/create', 'UsuariosController::create');
     $routes->post('admin/usuarios/store', 'UsuariosController::store');
+    $routes->post('admin/usuarios/reset-password', 'UsuariosController::resetPassword');
+    $routes->get('admin/usuarios/permisos', 'UsuariosController::permisos');
+    $routes->post('admin/usuarios/permisos', 'UsuariosController::updatePermisos');
+    $routes->get('admin/usuarios/show', 'UsuariosController::show');
+    $routes->post('admin/usuarios/update', 'UsuariosController::update');
 
     // Roles
     $routes->get('admin/roles', 'RolesController::index');
@@ -66,6 +71,20 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->post('admin/software/delete', 'SoftwareController::delete');
     $routes->get('admin/software/show', 'SoftwareController::show');
     $routes->post('admin/software/update', 'SoftwareController::update');
+
+    // Areas
+    $routes->get('admin/areas', 'AreaController::index');
+    $routes->post('admin/areas/store', 'AreaController::store');
+    $routes->get('admin/areas/show', 'AreaController::show');
+    $routes->post('admin/areas/update', 'AreaController::update');
+    $routes->post('admin/areas/delete', 'AreaController::delete');
+
+    // Permisos
+    $routes->get('admin/permisos', 'PermisosController::index');
+    $routes->post('admin/permisos/store', 'PermisosController::store');
+    $routes->get('admin/permisos/show', 'PermisosController::show');
+    $routes->post('admin/permisos/update', 'PermisosController::update');
+    $routes->post('admin/permisos/delete', 'PermisosController::delete');
 
     // Permisos a roles
     $routes->get('admin/roles/permisos', 'RolesPermisosController::index');
