@@ -61,6 +61,9 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->get('admin/roles', 'RolesController::index');
     $routes->get('admin/roles/create', 'RolesController::create');
     $routes->post('admin/roles/store', 'RolesController::store');
+    $routes->get('admin/roles/show', 'RolesController::show');
+    $routes->post('admin/roles/update', 'RolesController::update');
+    $routes->post('admin/roles/delete', 'RolesController::delete');
 
     // Software
     $routes->get('admin/software', 'SoftwareController::index');

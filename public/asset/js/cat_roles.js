@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#permisosTable').DataTable({
+    $('#table-roles').DataTable({
         pageLength: 10,
         // lengthMenu: [5, 10, 25, 50, 100],
         order: [[0, 'desc']],
@@ -9,48 +9,44 @@ $(document).ready(function () {
     });
 });
 
-function savePermiso() {
-    const name = $('[name="name"]').val().trim();
-    const description = $('[name="description"]').val().trim();
+function saveRol() {
+    const nombre = $('#rol_nombre').val().trim();
 
-    if (!name) {
+    if (!nombre) {
         Swal.fire({
             icon: 'warning',
-            title: 'Clave requerida',
-            text: 'La clave es obligatoria.'
+            title: 'Nombre requerido',
+            text: 'El nombre es obligatorio.'
         });
         return;
     }
 
     $.ajax({
-        url: `${base_url}admin/permisos/store`,
+        url: `${base_url}admin/roles/store`,
         type: 'POST',
         dataType: 'json',
-        data: { name, description }
+        data: { nombre }
     }).done(function (res) {
         if (res && res.ok) {
-            $('#crearPermisoForm')[0].reset();
-            const modalEl = document.getElementById('crearPermisoModal');
+            $('#crearRolForm')[0].reset();
+            const modalEl = document.getElementById('crearRolModal');
             const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
             modal.hide();
 
             Swal.fire({
                 icon: 'success',
                 title: 'Guardado',
-                text: 'Permiso guardado.',
+                text: 'Rol guardado.',
                 timer: 2000,
                 showConfirmButton: false
             }).then(() => {
                 window.location.reload();
             });
         } else {
-            const msg = res && res.error === 'duplicate'
-                ? 'Ya existe un permiso con esa clave.'
-                : 'No se pudo guardar.';
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: msg
+                text: 'No se pudo guardar.'
             });
         }
     }).fail(function () {
@@ -62,55 +58,53 @@ function savePermiso() {
     });
 }
 
-function editPermiso(id) {
-    const modalEl = document.getElementById('editPermisoModal');
+function editRol(id) {
+    const modalEl = document.getElementById('editRolModal');
     const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-    document.getElementById('id_edit').value = id;
+    document.getElementById('edit_rol_id').value = id;
     modal.show();
 
     $.ajax({
-        url: `${base_url}admin/permisos/show`,
+        url: `${base_url}admin/roles/show`,
         type: 'GET',
         dataType: 'json',
         data: { id }
     }).done(function (res) {
         if (res && res.ok) {
             const data = res.data;
-            $('#edit_name').val(data.name || '');
-            $('#edit_description').val(data.description || '');
+            $('#edit_rol_nombre').val(data.nombre || '');
         }
     });
 }
 
-function updatePermiso() {
-    const id = $('#id_edit').val();
-    const name = $('#edit_name').val().trim();
-    const description = $('#edit_description').val().trim();
+function updateRol() {
+    const id = $('#edit_rol_id').val();
+    const nombre = $('#edit_rol_nombre').val().trim();
 
-    if (!name) {
+    if (!nombre) {
         Swal.fire({
             icon: 'warning',
-            title: 'Clave requerida',
-            text: 'La clave es obligatoria.'
+            title: 'Nombre requerido',
+            text: 'El nombre es obligatorio.'
         });
         return;
     }
 
     $.ajax({
-        url: `${base_url}admin/permisos/update`,
+        url: `${base_url}admin/roles/update`,
         type: 'POST',
         dataType: 'json',
-        data: { id, name, description }
+        data: { id, nombre }
     }).done(function (res) {
         if (res && res.ok) {
-            const modalEl = document.getElementById('editPermisoModal');
+            const modalEl = document.getElementById('editRolModal');
             const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
             modal.hide();
 
             Swal.fire({
                 icon: 'success',
                 title: 'Actualizado',
-                text: 'Permiso actualizado.',
+                text: 'Rol actualizado.',
                 timer: 2000,
                 showConfirmButton: false
             }).then(() => {
@@ -118,7 +112,7 @@ function updatePermiso() {
             });
         } else {
             const msg = res && res.error === 'duplicate'
-                ? 'Ya existe un permiso con esa clave.'
+                ? 'Ya existe un rol con ese nombre.'
                 : 'No se pudo actualizar.';
             Swal.fire({
                 icon: 'error',
@@ -135,19 +129,19 @@ function updatePermiso() {
     });
 }
 
-function deletePermiso(id) {
+function deleteRol(id) {
     Swal.fire({
         icon: 'warning',
         title: 'Eliminar',
-        text: 'Seguro que quieres eliminar este permiso?',
+        text: '¿Seguro que quieres eliminar este rol?',
         showCancelButton: true,
-        confirmButtonText: 'Si, eliminar',
+        confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (!result.isConfirmed) return;
 
         $.ajax({
-            url: `${base_url}admin/permisos/delete`,
+            url: `${base_url}admin/roles/delete`,
             type: 'POST',
             dataType: 'json',
             data: { id }
@@ -156,7 +150,7 @@ function deletePermiso(id) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Eliminado',
-                    text: 'Permiso eliminado.',
+                    text: 'Rol eliminado.',
                     timer: 2000,
                     showConfirmButton: false
                 }).then(() => {
@@ -178,3 +172,4 @@ function deletePermiso(id) {
         });
     });
 }
+

@@ -1,41 +1,16 @@
 $(document).ready(function () {
+    
+    $(document).ready(function () {
     $('#usuariosTable').DataTable({
         pageLength: 10,
-        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'Todos']],
-        order: [[0, 'asc']],
-        responsive: true,
-        autoWidth: false,
-        deferRender: true,
-        pagingType: 'full_numbers',
-        dom:
-            "<'row g-2 align-items-center mb-2'<'col-sm-6'l><'col-sm-6'f>>" +
-            "<'row'<'col-12'tr>>" +
-            "<'row g-2 align-items-center mt-2'<'col-sm-5'i><'col-sm-7'p>>",
+        // lengthMenu: [5, 10, 25, 50, 100],
+        order: [[0, 'desc']],
         language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json',
-            search: '',
-            searchPlaceholder: 'Buscar usuario...',
-            lengthMenu: '_MENU_ por pagina',
-            info: 'Mostrando _START_ a _END_ de _TOTAL_',
-            infoEmpty: 'Sin registros',
-            zeroRecords: 'No se encontraron resultados',
-            paginate: {
-                first: 'Primero',
-                last: 'Ultimo',
-                next: 'Siguiente',
-                previous: 'Anterior'
-            }
-        },
-        initComplete: function () {
-            const $container = $(this.api().table().container());
-            $container.find('input[type="search"]')
-                .addClass('form-control form-control-sm')
-                .attr('aria-label', 'Buscar');
-            $container.find('select')
-                .addClass('form-select form-select-sm')
-                .attr('aria-label', 'Registros por pagina');
+            url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json'
         }
     });
+});
+
 
     $('#crearUsuarioForm').on('submit', function (e) {
         e.preventDefault();
