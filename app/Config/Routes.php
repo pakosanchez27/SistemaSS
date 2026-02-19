@@ -92,6 +92,7 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     // Permisos a roles
     $routes->get('admin/roles/permisos', 'RolesPermisosController::index');
     $routes->post('admin/roles/permisos/asignar', 'RolesPermisosController::asignar');
+    $routes->get('admin/roles/permisos/por-rol', 'RolesPermisosController::permisosPorRol');
 
     // TU SISTEMA (protegido por permisos)
     $routes->get('enlases', 'EmpleadosController::index', ['filter' => 'permiso:ver-enlaces']);
