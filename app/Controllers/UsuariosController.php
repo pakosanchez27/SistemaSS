@@ -547,6 +547,12 @@ class UsuariosController extends BaseController
         $correo = trim((string) $this->request->getPost('correo'));
 
         if (!$nombre || !$apPaterno || !$correo) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setJSON([
+                    'ok' => false,
+                    'error' => 'Faltan campos obligatorios.'
+                ]);
+            }
             return redirect()->to('/admin/perfil')
                 ->with('error', 'Faltan campos obligatorios.');
         }
@@ -573,10 +579,64 @@ class UsuariosController extends BaseController
             $db->transComplete();
         } catch (\Throwable $e) {
             $db->transRollback();
+            if ($this->request->isAJAX()) {
+                return $this->response->setJSON([
+                    'ok' => false,
+                    'error' => 'No se pudo actualizar el perfil.'
+                ]);
+            }
             return redirect()->to('/admin/perfil')
                 ->with('error', 'No se pudo actualizar el perfil.');
         }
 
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON(['ok' => true]);
+        }
         return redirect()->to('/admin/perfil')->with('success', 'Perfil actualizado.');
+    }
+
+    public function updatePerfilPassword()
+    {
+        helper('user');
+        $usuario = current_user();
+        if (!$usuario) {
+            return redirect()->to('/login');
+        }
+
+        $currentPassword = (string) $this->request->getPost('current_password');
+        $password = (string) $this->request->getPost('password');
+
+        if (!$currentPassword || !$password) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setJSON([
+                    'ok' => false,
+                    'error' => 'Debes ingresar tu contrasena actual y la nueva.'
+                ]);
+            }
+            return redirect()->to('/admin/perfil')
+                ->with('error', 'Debes ingresar tu contrasena actual y la nueva.');
+        }
+
+        $accesosModel = new AccesosModel();
+        $acceso = $accesosModel->where('user_id', (int) $usuario['id'])->first();
+        if (!$acceso || !password_verify($currentPassword, $acceso['password'])) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setJSON([
+                    'ok' => false,
+                    'error' => 'La contrasena actual no es correcta.'
+                ]);
+            }
+            return redirect()->to('/admin/perfil')
+                ->with('error', 'La contrasena actual no es correcta.');
+        }
+
+        $accesosModel->where('user_id', (int) $usuario['id'])
+            ->set('password', password_hash($password, PASSWORD_DEFAULT))
+            ->update();
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON(['ok' => true]);
+        }
+        return redirect()->to('/admin/perfil')->with('success', 'Contrasena actualizada.');
     }
 }

@@ -59,6 +59,7 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->post('admin/usuarios/delete', 'UsuariosController::delete');
     $routes->get('admin/perfil', 'UsuariosController::perfil');
     $routes->post('admin/perfil/update', 'UsuariosController::updatePerfil');
+    $routes->post('admin/perfil/password', 'UsuariosController::updatePerfilPassword');
 
     // Roles
     $routes->get('admin/roles', 'RolesController::index');
