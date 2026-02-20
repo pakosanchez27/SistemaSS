@@ -1,33 +1,33 @@
 $(document).ready(function () {
-    
-    $(document).ready(function () {
-    $('#usuariosTable').DataTable({
+    $.fn.dataTable.ext.errMode = 'none';
+    $("#usuariosTable").DataTable({
         pageLength: 10,
+        responsive: true,
         // lengthMenu: [5, 10, 25, 50, 100],
         order: [[0, 'desc']],
         language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json'
+            url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json',
+            emptyTable: 'Sin registros',
+            zeroRecords: 'Sin registros'
         }
     });
-});
 
-
-    $('#crearUsuarioForm').on('submit', function (e) {
+    $("#crearUsuarioForm").on('submit', function (e) {
         e.preventDefault();
         saveUsuario();
     });
 
-    $('#resetPasswordForm').on('submit', function (e) {
+    $("#resetPasswordForm").on('submit', function (e) {
         e.preventDefault();
         submitResetPassword();
     });
 
-    $('#userPermisosForm').on('submit', function (e) {
+    $("#userPermisosForm").on('submit', function (e) {
         e.preventDefault();
         submitUserPermisos();
     });
 
-    $('#editUsuarioForm').on('submit', function (e) {
+    $("#editUsuarioForm").on('submit', function (e) {
         e.preventDefault();
         submitEditUsuario();
     });
@@ -151,7 +151,12 @@ function managePermisos(id) {
         }
 
         const permisos = res.data || [];
-        if (!permisos.length) {
+        const paginas = res.paginas || [];
+        const paginasGlobales = res.paginas_globales || [];
+        const paginasArea = res.paginas_area || [];
+        const paginasPorArea = res.paginas_por_area || {};
+        const isRoot = !!res.is_root;
+        if (!permisos.length && !paginas.length) {
             $('#permisosList').html('<div class="text-muted">Sin permisos disponibles.</div>');
             return;
         }
@@ -232,6 +237,116 @@ function managePermisos(id) {
                         <div class="accordion-body">
                             <div class="row">
                                 ${otherItems.map(renderPerm).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (isRoot && (paginasGlobales.length || paginasArea.length || Object.keys(paginasPorArea).length)) {
+            const renderPagina = (p) => {
+                const checked = String(p.assigned) === '1' ? 'checked' : '';
+                return `
+                    <div class="col-12 col-md-6 col-lg-4 mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="paginas[]" id="pagina_${p.id}" value="${p.id}" ${checked}>
+                            <label class="form-check-label" for="pagina_${p.id}">${p.nombre}</label>
+                        </div>
+                    </div>
+                `;
+            };
+
+            idx += 1;
+            let headingId = `permUserHeading${idx}`;
+            let collapseId = `permUserCollapse${idx}`;
+            html += `
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="${headingId}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}">
+                            Paginas globales
+                        </button>
+                    </h2>
+                    <div id="${collapseId}" class="accordion-collapse collapse" aria-labelledby="${headingId}"
+                        data-bs-parent="#permisosAccordionUser">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${paginasGlobales.length ? paginasGlobales.map(renderPagina).join('') : '<div class="col-12 text-muted">No hay paginas globales.</div>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            idx += 1;
+            headingId = `permUserHeading${idx}`;
+            collapseId = `permUserCollapse${idx}`;
+            let areasHtml = '';
+            if (Object.keys(paginasPorArea).length) {
+                Object.keys(paginasPorArea).forEach((areaName) => {
+                    const items = paginasPorArea[areaName] || [];
+                    areasHtml += `
+                        <div class="mb-3">
+                            <div class="text-muted small mb-2">Paginas del area ${areaName}</div>
+                            <div class="row">
+                                ${items.length ? items.map(renderPagina).join('') : '<div class="col-12 text-muted">No hay paginas en esta area.</div>'}
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                areasHtml = `
+                    <div class="row">
+                        ${paginasArea.length ? paginasArea.map(renderPagina).join('') : '<div class="col-12 text-muted">No hay paginas por area.</div>'}
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="${headingId}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}">
+                            Paginas por area
+                        </button>
+                    </h2>
+                    <div id="${collapseId}" class="accordion-collapse collapse" aria-labelledby="${headingId}"
+                        data-bs-parent="#permisosAccordionUser">
+                        <div class="accordion-body">
+                            ${areasHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (paginas.length) {
+            idx += 1;
+            const headingId = `permUserHeading${idx}`;
+            const collapseId = `permUserCollapse${idx}`;
+            const renderPagina = (p) => {
+                const checked = String(p.assigned) === '1' ? 'checked' : '';
+                return `
+                    <div class="col-12 col-md-6 col-lg-4 mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="paginas[]" id="pagina_${p.id}" value="${p.id}" ${checked}>
+                            <label class="form-check-label" for="pagina_${p.id}">${p.nombre}</label>
+                        </div>
+                    </div>
+                `;
+            };
+            html += `
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="${headingId}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}">
+                            Paginas
+                        </button>
+                    </h2>
+                    <div id="${collapseId}" class="accordion-collapse collapse" aria-labelledby="${headingId}"
+                        data-bs-parent="#permisosAccordionUser">
+                        <div class="accordion-body">
+                            <div class="row">
+                                ${paginas.map(renderPagina).join('')}
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@
 
 <div class="container-flut">
     <div class="alert alert-primary" role="alert">
-        <h3>Bienbenido a la unidad de simplificacion y digitalizacion</h3>
+        <h3>Bienvenido a la unidad de simplificación y digitalización</h3>
     </div>
     <div class="text-center">
         <img src="<?= base_url('asset/img/USYDNEZA.jpeg') ?>" 

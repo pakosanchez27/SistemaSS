@@ -18,4 +18,10 @@ class AreasModel extends Model
     protected $deletedField  = 'deleted_at';
 
 
+    function getAreaById($areaId)
+    {
+        return $this->find($areaId);
+    }
+
+
 }

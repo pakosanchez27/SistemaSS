@@ -196,7 +196,6 @@
                                 'Registros' => ['registros-ver', 'registros-crear', 'registros-editar', 'registros-eliminar'],
                                 'Evidencias' => ['evidencias-subir', 'evidencias-ver', 'evidencias-eliminar'],
                                 'Reportes' => ['reportes-ver', 'exportar-excel', 'generar-pdf'],
-                                'Estadisticas' => ['ver-estadisticas'],
                                 'Administracion avanzada' => ['configuracion-sistema', 'admin-modulos'],
                             ];
 
@@ -240,6 +239,94 @@
                                     </div>
                                 </div>
                             <?php endforeach; ?>
+
+                            <?php
+                            $i++;
+                            $headingId = 'permHeading' . $i;
+                            $collapseId = 'permCollapse' . $i;
+                            ?>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="<?= $headingId ?>">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#<?= $collapseId ?>" aria-expanded="false" aria-controls="<?= $collapseId ?>">
+                                        Paginas
+                                    </button>
+                                </h2>
+                                <div id="<?= $collapseId ?>" class="accordion-collapse collapse" aria-labelledby="<?= $headingId ?>"
+                                    data-bs-parent="#permisosAccordion">
+                                    <div class="accordion-body">
+                                        <?php if (!empty($isRoot)) : ?>
+                                            <div class="mb-3">
+                                                <div class="fw-semibold mb-2">Paginas globales</div>
+                                                <div class="row">
+                                                    <?php if (!empty($paginasGlobales)) : ?>
+                                                        <?php foreach ($paginasGlobales as $p) : ?>
+                                                            <div class="col-12 col-md-6 col-lg-4 mb-2">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="paginas[]"
+                                                                        id="pagina<?= $p['id'] ?>" value="<?= $p['id'] ?>">
+                                                                    <label class="form-check-label" for="pagina<?= $p['id'] ?>">
+                                                                        <?= esc($p['nombre']) ?>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    <?php else : ?>
+                                                        <div class="col-12">
+                                                            <div class="text-muted">No hay paginas globales.</div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="fw-semibold mb-2">Paginas por area</div>
+                                                <?php if (!empty($paginasPorArea)) : ?>
+                                                    <?php foreach ($paginasPorArea as $areaName => $items) : ?>
+                                                        <div class="mb-3">
+                                                            <div class="text-muted small mb-2">Paginas del area <?= esc($areaName) ?></div>
+                                                            <div class="row">
+                                                                <?php foreach ($items as $p) : ?>
+                                                                    <div class="col-12 col-md-6 col-lg-4 mb-2">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="paginas[]"
+                                                                                id="pagina<?= $p['id'] ?>" value="<?= $p['id'] ?>">
+                                                                            <label class="form-check-label" for="pagina<?= $p['id'] ?>">
+                                                                                <?= esc($p['nombre']) ?>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                <?php else : ?>
+                                                    <div class="text-muted">No hay paginas por area.</div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php else : ?>
+                                            <div class="row">
+                                                <?php if (!empty($paginas)) : ?>
+                                                    <?php foreach ($paginas as $p) : ?>
+                                                        <div class="col-12 col-md-6 col-lg-4 mb-2">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="paginas[]"
+                                                                    id="pagina<?= $p['id'] ?>" value="<?= $p['id'] ?>">
+                                                                <label class="form-check-label" for="pagina<?= $p['id'] ?>">
+                                                                    <?= esc($p['nombre']) ?>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                <?php else : ?>
+                                                    <div class="col-12">
+                                                        <div class="text-muted">No hay paginas disponibles.</div>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

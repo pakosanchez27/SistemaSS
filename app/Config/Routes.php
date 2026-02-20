@@ -56,6 +56,9 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->post('admin/usuarios/permisos', 'UsuariosController::updatePermisos');
     $routes->get('admin/usuarios/show', 'UsuariosController::show');
     $routes->post('admin/usuarios/update', 'UsuariosController::update');
+    $routes->post('admin/usuarios/delete', 'UsuariosController::delete');
+    $routes->get('admin/perfil', 'UsuariosController::perfil');
+    $routes->post('admin/perfil/update', 'UsuariosController::updatePerfil');
 
     // Roles
     $routes->get('admin/roles', 'RolesController::index');
@@ -82,6 +85,12 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->post('admin/areas/update', 'AreaController::update');
     $routes->post('admin/areas/delete', 'AreaController::delete');
 
+    // Páginas
+    $routes->get('admin/paginas', 'PaginasController::index');
+    $routes->post('admin/paginas/store', 'PaginasController::store');
+    $routes->get('admin/paginas/list', 'PaginasController::list');
+    $routes->get('admin/paginas/show', 'PaginasController::show');
+    $routes->post('admin/paginas/update', 'PaginasController::update');
     // Permisos
     $routes->get('admin/permisos', 'PermisosController::index');
     $routes->post('admin/permisos/store', 'PermisosController::store');
